@@ -1,5 +1,6 @@
 package com.wcff.ciocolit.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -32,7 +33,8 @@ public class ChatMessage {
     @Column(name = "sender")
     private String sender;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ManyToOne
     @JoinColumn(name="chat_message_group_id")
     private ChatMessageGroup chatMessageGroup;
 

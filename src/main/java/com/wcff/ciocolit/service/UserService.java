@@ -1,9 +1,10 @@
 package com.wcff.ciocolit.service;
 
-import com.wcff.ciocolit.domain.UserBuilder;
+import com.wcff.ciocolit.domain.builder.UserBuilder;
 import com.wcff.ciocolit.domain.User;
 import com.wcff.ciocolit.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.SpringVersion;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,10 +17,15 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-//    @GetMapping("/user/{id}")
-//    public User getUserById(@PathVariable Long id) {
-//        User user = UserBuilder.createUserBuilder().name("Ioana").username("ioana$efa").password("password").build();
-//        userRepository.save(user);
-//        return userRepository.findById(id).get();
-//    }
+    @GetMapping("/user/{id}")
+    public User getUserById(@PathVariable Long id) {
+        User user = UserBuilder.createUserBuilder().name("Ioana").username("ioana$efa").password("password").build();
+        userRepository.save(user);
+        return userRepository.findById(id).get();
+    }
+
+    @GetMapping("/springVersion")
+    public String springVersion() {
+        return SpringVersion.getVersion();
+    }
 }

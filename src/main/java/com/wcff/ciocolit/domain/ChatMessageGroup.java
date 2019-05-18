@@ -22,7 +22,10 @@ public class ChatMessageGroup {
     )
     private Long id;
 
-    @OneToMany(mappedBy = "chat_group")
+    @Column(name = "chat_name")
+    private String chatName;
+
+    @OneToMany(mappedBy = "chatMessageGroup", fetch = FetchType.EAGER)
     private List<ChatMessage> messageList = new ArrayList<>();
 
     public ChatMessageGroup() {}

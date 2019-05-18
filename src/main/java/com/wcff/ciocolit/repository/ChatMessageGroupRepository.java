@@ -6,7 +6,8 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface ChatMessageRepository extends CrudRepository<ChatMessage, Long> {
+public interface ChatMessageGroupRepository extends CrudRepository<ChatMessageGroup, Long> {
 
-    List<ChatMessage> findAllByChatMessageGroup(ChatMessageGroup messageGroup);
+    ChatMessageGroup findByChatName(String name);
+
 }
