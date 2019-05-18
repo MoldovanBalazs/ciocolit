@@ -1,4 +1,6 @@
-package com.wcff.ciocolit.domain;
+package com.wcff.ciocolit.domain.builder;
+
+import com.wcff.ciocolit.domain.User;
 
 public class UserBuilder {
 

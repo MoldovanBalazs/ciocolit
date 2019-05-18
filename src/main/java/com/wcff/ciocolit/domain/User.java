@@ -1,5 +1,6 @@
 package com.wcff.ciocolit.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -7,6 +8,8 @@ import org.hibernate.annotations.GenericGenerator;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -41,6 +44,9 @@ public class User {
 
     @Column(name = "position")
     private String position;
+
+    @ManyToMany(mappedBy = "userList", fetch = FetchType.LAZY)
+    private List<Task> taskList = new ArrayList<>();
 
     @Column(name = "photo")
     private Byte[] photo;

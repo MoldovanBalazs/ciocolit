@@ -11,7 +11,6 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Date;
 
@@ -25,8 +24,10 @@ public class ChatController {
     private ChatMessageRepository chatMessageRepository;
 
     @MessageMapping("/chat.sendMessage")
-    @SendTo("/topic/public")
-    public ChatMessage sendMessage(@Payload ChatMessage chatMessage, @PathVariable String publi) {
+    @SendTo("/topic/{chanel}")
+    public ChatMessage sendMessage(@Payload ChatMessage chatMessage/*, @DestinationVariable("channel") String channel*/) {
+        //channel = "public";
+
         Long id = new Long(1L);
         ChatMessageGroup messageGroup = chatMessageGroupRepository.findById(id).get();
         System.out.println(messageGroup.getChatName());
@@ -37,11 +38,26 @@ public class ChatController {
         return chatMessage;
     }
 
+//    @MessageMapping("/chat.sendMessage")
+//    @SendTo("/topic/public")
+//    public ChatMessage sendMessage(@Payload ChatMessage chatMessage) {
+//        //channel = "public";
+//
+//        Long id = new Long(1L);
+//        ChatMessageGroup messageGroup = chatMessageGroupRepository.findById(id).get();
+//        System.out.println(messageGroup.getChatName());
+//        messageGroup.setMessageList(chatMessageRepository.findAllByChatMessageGroup(messageGroup));
+//        chatMessage.setChatMessageGroup(messageGroup);
+//        chatMessage.setTimeStamp(new Date().getTime());
+//        chatMessageRepository.save(chatMessage);
+//        return chatMessage;
+//    }
+
     @MessageMapping("/chat.addUser")
-    @SendTo("/topic/{topic}")
+    @SendTo("/topic/public")
     public ChatMessage addUser(@Payload ChatMessage chatMessage,
-                               SimpMessageHeaderAccessor headerAccessor,
-                               @DestinationVariable String topic ) {
+                               SimpMessageHeaderAccessor headerAccessor
+                               /*@DestinationVariable("channel") String channel*/) {
         // Add username in web socket session
         headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
         return chatMessage;
